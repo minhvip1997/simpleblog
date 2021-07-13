@@ -10,25 +10,6 @@ use App\Http\Requests\CommentFormRequest;
 
 class CommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,23 +25,14 @@ class CommentsController extends Controller
         $input['on_post'] = $request->input('on_post');
         $input['body'] = $request->input('body');
         $slug = $request->input('slug');
+        $post = Posts::where('slug', $slug)->first();
         Comments::create($input);
 
-        return redirect($slug)->with('message', 'Comment published');
+        return redirect()->back()->with('message', 'Comment published');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -95,7 +67,7 @@ class CommentsController extends Controller
         $message = "comment update successfull";
         $comment->body = $request->body;
         $comment->save();
-        return redirect('/'.$slug)->withMessage($message);
+        return redirect('post/'.$post->slug)->withMessage($message);
         } else {
         return redirect('/')->withErrors('you have not sufficient permissions');
         }
@@ -121,6 +93,6 @@ class CommentsController extends Controller
             $data['errors'] = 'Invalid Operation. You have not sufficient permissions';
         }
 
-        return redirect('/')->with($data);
+        return redirect()->back()->with($data);
     }
 }
