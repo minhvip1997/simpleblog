@@ -61,12 +61,11 @@ class RegisterController extends Controller
             'password.string' => 'This field must be a string.',
             'email.email' => 'This field must be a email.'
          );
-
+         
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-
         ],$messages);
     }
 
