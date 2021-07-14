@@ -13,7 +13,7 @@ class Posts extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment','on_post','id');    
+        return $this->hasMany('App\Models\Comments','on_post','id');    
     }
 
     public function author()
