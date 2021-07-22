@@ -49,11 +49,25 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = array( 
+            'password.min' => 'This field password must be at least 8 character.',
+            'name.max' => 'This field name must not be greater than 255 character.',
+            'password.max' => 'This field password must not be greater than 255 character.',
+            'name.required' => 'This field name can not be empty.',
+            'email.required' => 'This field email can not be empty.',
+            'password.required' => 'This field password can not be empty.',
+            'name.string' => 'This field must be a string.',
+            'email.string' => 'This field must be a string.',
+            'password.string' => 'This field must be a string.',
+            'email.email' => 'This field must be a email.'
+         );
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+
+        ],$messages);
     }
 
     /**
