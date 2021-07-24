@@ -23,7 +23,7 @@
           <li>
             <a href="{{ url('/auth/register') }}">{{ __('Register') }}</a>
           </li>
-          <li class="nav-item dropdown">
+          <li  class="nav-item dropdown">
                <a class="nav-link" data-toggle="dropdown" href="#">
                <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
                </a>
@@ -44,7 +44,7 @@
             <ul class="dropdown-menu" role="menu">
               @if (Auth::user()->can_post())
               <li>
-                <a href="{{url('post/create')}}">{{ __('Add new post') }}</a>
+                <a href="{{url('post/create')}}">{{ __('Add New Post') }}</a>
               </li>
               <li>
                 <a href="{{ url('/user/'.Auth::id().'/posts') }}">{{ __('My Posts') }}</a>
@@ -58,7 +58,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li  class="nav-item dropdown">
                <a class="nav-link" data-toggle="dropdown" href="#">
                <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
                </a>

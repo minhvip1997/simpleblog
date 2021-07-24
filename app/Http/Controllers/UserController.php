@@ -15,4 +15,23 @@ class UserController extends Controller
        Auth::logout();
        return redirect('/home');
    }
+
+   public function user_posts_all(Request $request)
+   {
+     //
+     $user = $request->user();
+     $posts = Post::where('author_id', $user->id)->orderBy('created_at', 'desc')->paginate(5);
+     $title = $user->name;
+     return view('home')->withPosts($posts)->withTitle($title);
+   }
+ 
+   public function user_posts_draft(Request $request)
+   {
+     //
+     $user = $request->user();
+     $posts = Post::where('author_id', $user->id)->where('active', '0')->orderBy('created_at', 'desc')->paginate(5);
+     $title = $user->name;
+     return view('home')->withPosts($posts)->withTitle($title);
+   }
+
 }
