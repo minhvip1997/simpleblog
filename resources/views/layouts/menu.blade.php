@@ -1,93 +1,80 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ __('Home') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                            <li  class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#">
-                                    <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right p-0">
-                                    <a class="navbar-brand" 
-                                     href="{{route('language.index',['en'])}}">
-                                        <i>English</i>
-                                    </a>
-                                    <a class="navbar-brand"  
-                                    href="{{route('language.index',['vi'])}}">
-                                        <i>Tiếng Việt</i>
-                                    </a>
-                                </div>
-                                
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    
-                                    <a class="dropdown-item" href="">{{ __('Add new post') }}</a>
-                                    <a class="dropdown-item" href="">{{ __('My Posts') }}</a>
-                                    <a class="dropdown-item" href="">{{ __('My Profile') }}</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                    
-                                </div>
-                                
-                            </li>
-                            <li  class="nav-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#">
-                                    <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right p-0">
-                                    <a class="navbar-brand" 
-                                    href="{{route('language.index',['en'])}}">
-                                        <i>English</i>
-                                    </a>
-                                    <a class="navbar-brand" 
-                                    href="{{route('language.index',['vi'])}}">
-                                        <i>Tiếng Việt</i>
-                                    </a>
-                                </div>
-                                
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle Navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://www.flowkl.com">Flowkl</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="{{ url('/') }}">{{ __('Home') }}</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          @if (Auth::guest())
+          <li>
+            <a href="{{ url('/auth/login') }}">{{ __('Login') }}</a>
+          </li>
+          <li>
+            <a href="{{ url('/auth/register') }}">{{ __('Register') }}</a>
+          </li>
+          <li class="nav-item dropdown">
+               <a class="nav-link" data-toggle="dropdown" href="#">
+               <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
+               </a>
+               <div class="dropdown-menu dropdown-menu-right p-0">
+                  <a class="navbar-brand" 
+                     href="{{route('language.index',['en'])}}">
+                  <i>English</i>
+                  </a>
+                  <a class="navbar-brand"  
+                     href="{{route('language.index',['vi'])}}">
+                  <i>Tiếng Việt</i>
+                  </a>
+               </div>
+            </li>
+          @else
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              @if (Auth::user()->can_post())
+              <li>
+                <a href="{{url('post/create')}}">{{ __('Add new post') }}</a>
+              </li>
+              <li>
+                <a href="{{ url('/user/'.Auth::id().'/posts') }}">{{ __('My Posts') }}</a>
+              </li>
+              @endif
+              <li>
+                <a href="{{ url('/user/'.Auth::id()) }}">{{ __('My Profile') }}</a>
+              </li>
+              <li>
+                <a href="logout">{{ __('Logout') }}</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+               <a class="nav-link" data-toggle="dropdown" href="#">
+               <i class="flag-icon flag-icon-us">{{ __('Language') }}</i>
+               </a>
+               <div class="dropdown-menu dropdown-menu-right p-0">
+                  <a class="navbar-brand" 
+                     href="{{route('language.index',['en'])}}">
+                  <i>English</i>
+                  </a>
+                  <a class="navbar-brand"  
+                     href="{{route('language.index',['vi'])}}">
+                  <i>Tiếng Việt</i>
+                  </a>
+               </div>
+            </li>
+          @endif
+        </ul>
+      </div>
+    </div>
+  </nav>

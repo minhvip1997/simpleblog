@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\UserRole;
 
 class User extends Authenticatable
 {
@@ -40,4 +41,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // user has many posts
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post', 'author_id','id');
+    }
+
+    // user has many comments
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment', 'from_user','id');
+    }
+
+    public function can_post()
+    {
+    $role = $this->role;
+    if ($role == UserRole::author || $role == UserRole::admin) {
+      return true;
+    }
+    return false;
+    }
+
+    public function is_admin()
+    {
+    $role = $this->role;
+    if ($role == UserRole::admin) {
+      return true;
+    }
+    return false;
+    }
 }
