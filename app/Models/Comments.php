@@ -18,6 +18,6 @@ class Comments extends Model
 
     public function post()
     {
-        return $this->belongsTo('App\Models\Post','on_post','id');
+        return $this->belongsTo('App\Models\Posts','on_post','id');
     }
 }

@@ -78,7 +78,6 @@ class PostsController extends Controller
     {
         //
         $post = Posts::where('slug', $slug)->first();
-    
         if ($post) {
             if ($post->active == false)
                 return redirect('/')->withErrors('requested page not found');
@@ -161,4 +160,5 @@ class PostsController extends Controller
 
         return redirect('/')->with($data);
     }
+
 }

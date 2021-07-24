@@ -33,7 +33,6 @@
   <input type="submit" name='publish' class="btn btn-success" value="{{ __('Publish') }}" />
   @endif
   <input type="submit" name='save' class="btn btn-default" value="{{ __('Save As Draft') }}" />
-  <!--<a href="delete/{{$post->id}}" class="btn btn-danger">{{ __('Delete') }}</a>-->
 </form>
 <br>
 <form action="{{ url('post/'.$post->id) }}" method="POST">
